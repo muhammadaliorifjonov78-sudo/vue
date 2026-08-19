@@ -13,6 +13,23 @@
         <input v-model="password" type="password" class="mt-2 w-full rounded-lg border border-gray-300 px-4 py-3 focus:border-blue-500 focus:outline-none" @keyup.enter="login" />
       </div>
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
       <button @click="login" :disabled="loading" class="mt-10 w-full h-11 bg-blue-500 text-white font-semibold rounded-xl disabled:opacity-50">{{ loading ? 'Tekshirilmoqda...' : 'Kirish' }}</button>
       <p v-if="message" class="mt-4 text-center text-red-500">{{ message }}</p>
       <router-link class="block mt-6 text-center text-gray-500" to="/register">Yangi akkaunt yaratish</router-link>
