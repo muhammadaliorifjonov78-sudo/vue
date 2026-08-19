@@ -8,16 +8,16 @@
 
       <p class="text-center text-gray-500 mt-3">
         {{ phoneNumber }} raqamiga ulangan Telegram botga
-        4 xonali kod yuborildi.
+        6 xonali kod yuborildi.
       </p>
 
       <input
         v-model="code"
-        maxlength="4"
+        maxlength="6"
         inputmode="numeric"
         autocomplete="one-time-code"
         class="mt-6 w-full rounded-lg border border-gray-300 px-4 py-3 text-center text-2xl tracking-[10px] focus:border-blue-500 focus:outline-none"
-        placeholder="0000"
+        placeholder="000000"
         @keyup.enter="verify"
       />
 
@@ -66,8 +66,8 @@ async function verify() {
   message.value = "";
   success.value = false;
 
-  if (!/^\d{4}$/.test(code.value)) {
-    message.value = "4 xonali kodni kiriting.";
+  if (!/^\d{6}$/.test(code.value)) {
+    message.value = "6 xonali kodni kiriting.";
     return;
   }
 
