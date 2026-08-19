@@ -80,7 +80,7 @@ async function verify() {
 
   try {
     const response = await axios.post(
-      "http://127.0.0.1:8000/verify-code/",
+      "https://edumatch-production-92a4.up.railway.app/verify-code/",
       {
         phone_number: phoneNumber,
         code: code.value,

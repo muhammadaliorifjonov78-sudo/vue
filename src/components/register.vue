@@ -143,7 +143,7 @@ async function register() {
   try {
 
     const response = await axios.post(
-      "http://127.0.0.1:8000/register/",
+      "https://edumatch-production-92a4.up.railway.app/register/",
       {
         phone_number: phoneNumber.value,
         password: password.value,
