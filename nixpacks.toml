@@ -1,8 +1,0 @@
-[phases]
-setup = ["npm install"]
-
-[build]
-cmd = "npm run build"
-
-[start]
-cmd = "npx serve dist -s -l $PORT"
