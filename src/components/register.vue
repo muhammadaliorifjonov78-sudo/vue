@@ -157,6 +157,11 @@ async function register() {
       response.data.phone_number
     );
 
+    // Tasdiqlash kodini saqlaymiz (Telegram bo'lmasa avtomatik ishlatiladi)
+    if (response.data.code) {
+      localStorage.setItem("pending_code", response.data.code);
+    }
+
 
     // Eski authentication ma'lumotlarini o'chirish
     localStorage.removeItem("verified");

@@ -56,11 +56,16 @@ import axios from "axios";
 const router = useRouter();
 
 const phoneNumber = localStorage.getItem("pending_phone") || "";
+const pendingCode = localStorage.getItem("pending_code") || "";
 
-const code = ref("");
+const code = ref(pendingCode);
 const message = ref("");
 const success = ref(false);
 const loading = ref(false);
+
+if (pendingCode && phoneNumber) {
+  verify();
+}
 
 async function verify() {
   message.value = "";
@@ -108,6 +113,8 @@ async function verify() {
     localStorage.removeItem(
       "pending_phone"
     );
+
+    localStorage.removeItem("pending_code");
 
     setTimeout(() => {
       router.replace("/home");

@@ -55,6 +55,9 @@ async function login() {
   try {
     const response = await axios.post('https://edumatch-production-92a4.up.railway.app/login/', { phone_number: phoneNumber.value, password: password.value })
     localStorage.setItem('pending_phone', response.data.phone_number)
+    if (response.data.code) {
+      localStorage.setItem('pending_code', response.data.code)
+    }
     localStorage.removeItem('verified')
     localStorage.removeItem('auth_token')
     router.push('/verify-code')
