@@ -77,7 +77,7 @@ import { computed, onMounted, ref, watch } from "vue";
 import { useRoute } from "vue-router";
 
 const route = useRoute();
-const API_URL = "https://edumatch-production-92a4.up.railway.app/api/courses/";
+const API_URL = "https://edumatch1.up.railway.app/api/courses/";
 const courses = ref([]);
 const loading = ref(false);
 const errorMessage = ref("");

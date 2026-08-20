@@ -53,7 +53,7 @@ async function login() {
   if (!phoneNumber.value || !password.value) { message.value = 'Telefon raqami va parolni kiriting.'; return }
   loading.value = true
   try {
-    const response = await axios.post('https://edumatch-production-92a4.up.railway.app/login/', { phone_number: phoneNumber.value, password: password.value })
+    const response = await axios.post('https://edumatch1.up.railway.app/login/', { phone_number: phoneNumber.value, password: password.value })
     localStorage.setItem('pending_phone', response.data.phone_number)
     if (response.data.code) {
       localStorage.setItem('pending_code', response.data.code)

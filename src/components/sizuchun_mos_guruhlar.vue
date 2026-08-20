@@ -103,7 +103,7 @@
 import { onMounted, ref } from "vue";
 import { useRoute, useRouter } from "vue-router";
 
-const API_URL = "https://edumatch-production-92a4.up.railway.app/api/groups/filter/";
+const API_URL = "https://edumatch1.up.railway.app/api/groups/filter/";
 
 const route = useRoute();
 const router = useRouter();
