@@ -71,6 +71,16 @@
         {{ message }}
       </p>
 
+      <!-- Telegram bot -->
+      <a
+        :href="botLink"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="mt-4 flex h-11 w-full items-center justify-center gap-2 rounded-xl bg-[#229ED9] text-white font-semibold"
+      >
+        <span>✈️</span> Telegram botga ulashish
+      </a>
+
       <!-- Login -->
       <router-link
         class="block mt-5 text-center text-gray-500"
@@ -97,6 +107,8 @@ const confirmPassword = ref("");
 
 const message = ref("");
 const loading = ref(false);
+
+const botLink = "https://t.me/EduMatchUZBot";
 
 
 async function register() {

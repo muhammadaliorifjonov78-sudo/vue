@@ -32,6 +32,11 @@
 
       <button @click="login" :disabled="loading" class="mt-10 w-full h-11 bg-blue-500 text-white font-semibold rounded-xl disabled:opacity-50">{{ loading ? 'Tekshirilmoqda...' : 'Kirish' }}</button>
       <p v-if="message" class="mt-4 text-center text-red-500">{{ message }}</p>
+
+      <a :href="botLink" target="_blank" rel="noopener noreferrer" class="mt-4 flex h-11 w-full items-center justify-center gap-2 rounded-xl bg-[#229ED9] text-white font-semibold">
+        <span>✈️</span> Telegram botga ulashish
+      </a>
+
       <router-link class="block mt-6 text-center text-gray-500" to="/register">Yangi akkaunt yaratish</router-link>
     </div>
   </div>
@@ -47,6 +52,7 @@ const phoneNumber = ref('')
 const password = ref('')
 const message = ref('')
 const loading = ref(false)
+const botLink = 'https://t.me/EduMatchUZBot'
 
 async function login() {
   message.value = ''
