@@ -1,5 +1,5 @@
 <template>
-  <div class="w-[390px] min-h-screen mx-auto bg-[#EDF0F6] pb-[75px]">
+  <div class="w-full max-w-[390px] min-h-screen mx-auto bg-[#EDF0F6] pb-[75px]">
 
     <!-- HEADER -->
     <div class="px-[15px] pt-[25px] flex items-center justify-between">
@@ -161,68 +161,6 @@
         Yoqtirgan guruhlaringizni yurak belgisini bosib
         saqlashingiz mumkin.
       </p>
-
-    </div>
-
-
-    <!-- BOTTOM NAVBAR -->
-    <div
-      class="fixed bottom-0 left-1/2 -translate-x-1/2
-      w-[390px] h-[58px] bg-white
-      border-t border-gray-200
-      flex items-center justify-around"
-    >
-
-      <!-- HOME -->
-      <a
-        href="/home"
-        class="flex flex-col items-center gap-[4px] text-gray-500"
-      >
-        <i class="fa-solid fa-house text-[14px]"></i>
-
-        <span class="text-[8px]">
-          Bosh sahifa
-        </span>
-      </a>
-
-
-      <!-- SEARCH -->
-      <a
-        href="/search"
-        class="flex flex-col items-center gap-[4px] text-gray-500"
-      >
-        <i class="fa-solid fa-magnifying-glass text-[14px]"></i>
-
-        <span class="text-[8px]">
-          Qidirish
-        </span>
-      </a>
-
-
-      <!-- FAVORITES ACTIVE -->
-      <a
-        href="/favorites"
-        class="flex flex-col items-center gap-[4px] text-blue-600"
-      >
-        <i class="fa-solid fa-heart text-[14px]"></i>
-
-        <span class="text-[8px] font-semibold">
-          Sevimlilar
-        </span>
-      </a>
-
-
-      <!-- PROFILE -->
-      <a
-        href="/profile"
-        class="flex flex-col items-center gap-[4px] text-gray-500"
-      >
-        <i class="fa-solid fa-user text-[14px]"></i>
-
-        <span class="text-[8px]">
-          Profil
-        </span>
-      </a>
 
     </div>
 

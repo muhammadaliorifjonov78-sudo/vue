@@ -1,5 +1,5 @@
 <template>
-  <div class="w-[390px] min-h-screen mx-auto bg-[#EDF0F6] pb-[80px]">
+  <div class="w-full max-w-[390px] min-h-screen mx-auto bg-[#EDF0F6] pb-[80px]">
 
     <!-- Header -->
     <div class="px-[15px] pt-[22px]">
@@ -94,9 +94,10 @@
       <!-- Course cards -->
       <div class="mt-[12px] space-y-[10px]">
 
-        <div
+        <router-link
           v-for="course in filteredCourses"
           :key="course.id"
+          :to="{ path: '/joybandqilish', query: { course: course.id } }"
           class="bg-white rounded-[11px] p-[10px] flex gap-[10px]"
         >
 
@@ -126,7 +127,7 @@
               </div>
 
               <button
-                @click="toggleFavorite(course)"
+                @click.stop="toggleFavorite(course)"
                 class="ml-[5px] w-[25px] h-[25px] flex items-center justify-center"
               >
                 <i
@@ -161,12 +162,12 @@
             </div>
 
             <p class="text-[11px] font-bold mt-[5px]">
-              {{ course.price }}
+              {{ formatPrice(course.price) }} so'm
             </p>
 
           </div>
 
-        </div>
+        </router-link>
 
 
         <!-- Empty -->
@@ -202,12 +203,16 @@
 
 <script setup>
 
-import { ref, computed } from "vue";
+import { ref, computed, onMounted } from "vue";
 
+const API_URL = "https://edumatch1.up.railway.app/api/courses/";
 
 const searchText = ref("");
 
 const selectedCategory = ref("");
+
+const courses = ref([]);
+const loading = ref(true);
 
 
 const categories = [
@@ -238,59 +243,25 @@ const categories = [
 ];
 
 
-const courses = ref([
-  {
-    id: 1,
-    title: "Frontend Dasturlash",
-    category: "Web Dasturlash",
-    teacher: "Ali Valiyev",
-    rating: "4.9",
-    students: 120,
-    price: "350 000 so'm",
-    favorite: false,
-    image:
-      "https://images.unsplash.com/photo-1498050108023-c5249f4df085",
-  },
+const formatPrice = (price) => new Intl.NumberFormat("uz-UZ").format(price || 0);
 
-  {
-    id: 2,
-    title: "Python Backend",
-    category: "Dasturlash",
-    teacher: "Sardor Karimov",
-    rating: "4.8",
-    students: 95,
-    price: "300 000 so'm",
-    favorite: true,
-    image:
-      "https://images.unsplash.com/photo-1526379095098-d400fd0bf935",
-  },
 
-  {
-    id: 3,
-    title: "Grafik Dizayn",
-    category: "Grafik dizayn",
-    teacher: "Aziza Xasanova",
-    rating: "4.9",
-    students: 80,
-    price: "280 000 so'm",
-    favorite: false,
-    image:
-      "https://images.unsplash.com/photo-1561070791-2526d30994b5",
-  },
-
-  {
-    id: 4,
-    title: "Mobile Development",
-    category: "Mobil dasturlash",
-    teacher: "Jasur Aliyev",
-    rating: "4.7",
-    students: 64,
-    price: "320 000 so'm",
-    favorite: false,
-    image:
-      "https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c",
-  },
-]);
+const loadCourses = async () => {
+  loading.value = true;
+  try {
+    const response = await fetch(API_URL);
+    if (!response.ok) throw new Error();
+    const data = await response.json();
+    courses.value = (Array.isArray(data) ? data : data.results || []).map((c) => ({
+      ...c,
+      favorite: false,
+    }));
+  } catch (error) {
+    console.error(error);
+  } finally {
+    loading.value = false;
+  }
+};
 
 
 const selectCategory = (category) => {
@@ -323,9 +294,9 @@ const filteredCourses = computed(() => {
     const text = searchText.value.toLowerCase();
 
     result = result.filter((course) =>
-      course.title.toLowerCase().includes(text) ||
-      course.teacher.toLowerCase().includes(text) ||
-      course.category.toLowerCase().includes(text)
+      (course.title || "").toLowerCase().includes(text) ||
+      (course.teacher || "").toLowerCase().includes(text) ||
+      (course.category || "").toLowerCase().includes(text)
     );
 
   }
@@ -340,5 +311,7 @@ const toggleFavorite = (course) => {
   course.favorite = !course.favorite;
 
 };
+
+onMounted(loadCourses);
 
 </script>

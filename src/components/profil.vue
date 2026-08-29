@@ -1,5 +1,5 @@
 <template>
-  <div class="w-[390px] min-h-screen mx-auto bg-white text-gray-900 pb-[70px]">
+  <div class="w-full max-w-[390px] min-h-screen mx-auto bg-white text-gray-900 pb-[70px]">
     <!-- PROFILE -->
     <div class="flex flex-col items-center pt-[30px]">
       <img
@@ -10,7 +10,7 @@
 
       <h1 class="text-[15px] font-bold mt-[8px]">User</h1>
 
-      <p class="text-[11px] text-gray-500 mt-[2px]">+998 90 000 00 00</p>
+      <p class="text-[11px] text-gray-500 mt-[2px]">{{ displayPhone }}</p>
     </div>
 
     <!-- SEVIMLILAR -->
@@ -85,25 +85,39 @@
       </button>
 
       <!-- 5 -->
-      <router-link to="/login">
-        <button @click="logout" class="w-full h-[38px] flex items-center justify-between">
-          <div class="flex items-center gap-[10px]">
-            <i
-              class="fa-solid fa-arrow-right-from-bracket text-[12px] text-gray-600 w-[14px]"
-            ></i>
+      <button @click="logout" class="w-full h-[38px] flex items-center justify-between border-t border-gray-100 mt-2">
+        <div class="flex items-center gap-[10px]">
+          <i
+            class="fa-solid fa-arrow-right-from-bracket text-[12px] text-gray-600 w-[14px]"
+          ></i>
 
-            <span class="text-[10px]"> Chiqish </span>
-          </div>
+          <span class="text-[10px]"> Chiqish </span>
+        </div>
 
-          <i class="fa-solid fa-chevron-right text-[9px] text-gray-500"></i>
-        </button>
-      </router-link>
+        <i class="fa-solid fa-chevron-right text-[9px] text-gray-500"></i>
+      </button>
     </div>
   </div>
 </template>
 
 <script setup>
+import { computed } from "vue";
+import { useRouter } from "vue-router";
+
+const router = useRouter();
+
+const displayPhone = computed(() => {
+  const phone = localStorage.getItem("phone_number") || "";
+  if (phone) return phone;
+  return "+998 90 000 00 00";
+});
+
 const logout = () => {
-  alert("Tizimdan chiqildi!");
+  localStorage.removeItem("auth_token");
+  localStorage.removeItem("verified");
+  localStorage.removeItem("phone_number");
+  localStorage.removeItem("pending_phone");
+  localStorage.removeItem("pending_code");
+  router.replace("/login");
 };
 </script>

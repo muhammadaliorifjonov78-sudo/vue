@@ -1,9 +1,9 @@
 <template>
-  <div class="w-[390px] min-h-screen mx-auto bg-[#EDF0F6] pb-10">
+  <div class="w-full max-w-[390px] min-h-screen mx-auto bg-[#EDF0F6] pb-10">
     <nav class="flex items-center justify-between px-5 pt-5">
-      <a href="/matching_group">
+      <router-link to="/matching_group">
         <img width="22" height="22" src="https://img.icons8.com/android/24/left.png" alt="back" />
-      </a>
+      </router-link>
 
       <h1 class="text-[20px] font-semibold text-gray-800">Sizga mos guruhlar</h1>
 

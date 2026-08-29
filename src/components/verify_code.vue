@@ -8,7 +8,7 @@
 
       <p class="text-center text-gray-500 mt-3">
         {{ phoneNumber }} raqamiga ulangan Telegram botga
-        6 xonali kod yuborildi.
+        6 xonali kod yuborildi. Kodni quyida kiriting.
       </p>
 
       <input
@@ -58,14 +58,10 @@ const router = useRouter();
 const phoneNumber = localStorage.getItem("pending_phone") || "";
 const pendingCode = localStorage.getItem("pending_code") || "";
 
-const code = ref(pendingCode);
+const code = ref(pendingCode || "");
 const message = ref("");
 const success = ref(false);
 const loading = ref(false);
-
-if (pendingCode && phoneNumber) {
-  verify();
-}
 
 async function verify() {
   message.value = "";

@@ -1,9 +1,9 @@
 <template>
-  <div class="w-[390px] min-h-screen mx-auto bg-[#EDF0F6] pb-10">
+  <div class="w-full max-w-[390px] min-h-screen mx-auto bg-[#EDF0F6] pb-10">
     <nav class="flex items-center justify-between px-5 pt-5">
-      <a href="/home">
+      <router-link to="/home">
         <img width="22" src="https://img.icons8.com/android/24/left.png" alt="orqaga" />
-      </a>
+      </router-link>
       <h1 class="text-[20px] font-semibold">Mos guruhni topish</h1>
       <img width="24" src="https://img.icons8.com/ios/50/filter--v1.png" alt="filter" />
     </nav>

@@ -6,7 +6,7 @@ import BottomBar from './components/BottomBar.vue'
 const route = useRoute()
 
 const showBottomBar = computed(() => {
-  return ['home', 'sizuchun_mos_guruhlar', 'search', 'profil'].includes(route.name)
+  return ['home', 'sizuchun_mos_guruhlar', 'search', 'profil', 'sevimlilar', 'category_courses'].includes(route.name)
 })
 </script>
 

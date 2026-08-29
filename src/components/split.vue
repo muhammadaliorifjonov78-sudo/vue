@@ -1,5 +1,5 @@
 <template>
-  <div class="w-[390px] h-screen bg-[#F7F9FC] mx-auto rounded-[5px]">
+  <div class="w-full max-w-[390px] h-screen bg-[#F7F9FC] mx-auto rounded-[5px]">
     <div class="">
       <img
         class="w-[350px] m-auto text-center items-center justfiy-center flex animate-pulse"

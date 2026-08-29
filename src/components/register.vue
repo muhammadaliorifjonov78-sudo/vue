@@ -15,7 +15,7 @@
         <input
           v-model="phoneNumber"
           type="tel"
-          placeholder="+998901234567"
+          placeholder="901234567"
           class="mt-2 w-full rounded-lg border border-gray-300 px-4 py-3 focus:border-blue-500 focus:outline-none"
         />
 
@@ -111,12 +111,12 @@ async function register() {
   }
 
 
-  // Telefon raqamini tekshirish
-  const phoneRegex = /^\+998\d{9}$/;
+  // Telefon raqamini tekshirish (faqat raqamlar, 9 yoki 12 raqam)
+  const digits = phoneNumber.value.replace(/[^\d]/g, "");
 
-  if (!phoneRegex.test(phoneNumber.value)) {
+  if (digits.length !== 9 && digits.length !== 12) {
     message.value =
-      "Telefon raqamini +998901234567 ko'rinishida kiriting.";
+      "Telefon raqamini 901234567 ko'rinishida kiriting.";
     return;
   }
 

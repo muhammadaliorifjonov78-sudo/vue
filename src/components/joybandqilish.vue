@@ -1,12 +1,12 @@
 <template>
-  <div class="w-[390px] min-h-screen mx-auto bg-white pb-[90px] pt-[10px]">
+  <div class="w-full max-w-[390px] min-h-screen mx-auto bg-white pb-[90px] pt-[10px]">
 
     <!-- ================= TOP IMAGE ================= -->
     <div class="relative w-full h-[245px]">
 
       <img
-        src="https://i.pinimg.com/1200x/8c/f9/51/8cf951adfb8156444b1830ede482ad8e.jpg"
-        alt="Python Backend"
+        :src="image"
+        alt="Course"
         class="w-full rounded-[7px] h-full object-cover"
       />
 
@@ -41,17 +41,28 @@
     </div>
 
 
+    <!-- ================= LOADING / ERROR ================= -->
+    <div v-if="loading" class="px-4 pt-3 text-center text-gray-500 text-[13px]">
+      Ma'lumot yuklanmoqda...
+    </div>
+
+    <div v-else-if="error" class="px-4 pt-3">
+      <div class="bg-red-50 text-red-600 rounded-xl p-4 text-[12px]">
+        {{ error }}
+      </div>
+    </div>
+
     <!-- ================= COURSE INFO ================= -->
-    <div class="px-4 pt-3">
+    <div v-else class="px-4 pt-3">
 
       <!-- academy -->
       <p class="text-[10px] text-gray-500 uppercase">
-        IT HOUSE ACADEMY
+        {{ teacher }}
       </p>
 
       <!-- title -->
       <h1 class="text-[20px] font-bold text-gray-900 mt-1">
-        Python Backend
+        {{ title }}
       </h1>
 
 
@@ -63,19 +74,22 @@
         </span>
 
         <span class="font-semibold">
-          4.9
+          {{ rating }}
         </span>
 
-        <span class="text-gray-500">
-          (1200+)
+        <span class="text-gray-500" v-if="students">
+          ({{ students }} o'quvchi)
         </span>
 
-        <span class="text-gray-300">
+        <span
+          v-if="location"
+          class="text-gray-300"
+        >
           |
         </span>
 
-        <span class="text-gray-500">
-          ♧ 2.3 km
+        <span class="text-gray-500" v-if="location">
+          <i class="fa-solid fa-location-dot"></i> {{ location }}
         </span>
 
       </div>
@@ -85,17 +99,18 @@
       <div class="flex gap-2 mt-3">
 
         <span
+          v-if="data && (data.category || data.direction)"
           class="bg-[#eef2ff] text-[9px] text-blue-600
           px-2 py-1 rounded"
         >
-          Dasturlash
+          {{ data.category || data.direction }}
         </span>
 
         <span
           class="bg-[#eef2ff] text-[9px] text-blue-600
           px-2 py-1 rounded"
         >
-          Backend
+          {{ isCourse ? "O'quv kursi" : (data && data.academy) || "Akademiya" }}
         </span>
 
       </div>
@@ -161,27 +176,15 @@
         Dars kunlari va vaqti
       </h2>
 
-      <div class="flex gap-2 mt-2">
+      <div class="flex flex-wrap gap-2 mt-2">
 
         <span
+          v-for="day in dayList"
+          :key="day"
           class="px-3 py-1 bg-blue-50
           text-blue-600 rounded-md text-[9px]"
         >
-          Seshanba
-        </span>
-
-        <span
-          class="px-3 py-1 bg-blue-50
-          text-blue-600 rounded-md text-[9px]"
-        >
-          Payshanba
-        </span>
-
-        <span
-          class="px-3 py-1 bg-blue-50
-          text-blue-600 rounded-md text-[9px]"
-        >
-          Shanba
+          {{ day }}
         </span>
 
       </div>
@@ -190,7 +193,7 @@
         class="inline-flex items-center gap-1 mt-2
         px-2 py-1 bg-blue-50 rounded-md text-blue-600 text-[9px]"
       >
-        ◷ 16:30 - 18:00
+        ◷ {{ timeText }}
       </div>
 
 
@@ -216,7 +219,7 @@
           <div class="flex items-center gap-1">
 
             <h3 class="text-[11px] font-semibold">
-              User
+              {{ teacher }}
             </h3>
 
             <span class="ml-[45px] text-yellow-400">
@@ -224,7 +227,7 @@
             </span>
 
             <span class="text-[10px] font-semibold">
-              4.9
+              {{ rating }}
             </span>
 
           </div>
@@ -311,7 +314,7 @@
 
     <div
       class="fixed bottom-0 left-1/2 -translate-x-1/2
-      w-[390px] h-[65px] bg-white
+      w-full max-w-[390px] h-[65px] bg-white
       border-t border-gray-200
       flex items-center gap-2 px-3"
     >
@@ -344,7 +347,7 @@
         active:scale-[0.98] transition"
         @click="bookGroup"
       >
-        Joy band qilish
+        Joy band qilish · {{ priceText }}
       </button>
 
     </div>
@@ -354,9 +357,74 @@
 
 
 <script setup>
+import { ref, computed, onMounted } from "vue";
+import { useRoute, useRouter } from "vue-router";
 
-const bookGroup = () => {
-  alert("Joy band qilindi!");
+const API_URL = "https://edumatch1.up.railway.app";
+
+const route = useRoute();
+const router = useRouter();
+
+const data = ref(null);
+const loading = ref(true);
+const error = ref("");
+
+const isCourse = computed(() => Boolean(route.query.course));
+
+const title = computed(() => data.value?.title || (isCourse.value ? "Kurs" : "Guruh"));
+const teacher = computed(() => data.value?.teacher || data.value?.academy || "O'qituvchi");
+const rating = computed(() => data.value?.rating ?? data.value?.match_percent ?? "4.9");
+const price = computed(() => data.value?.price ?? 0);
+const priceText = computed(() =>
+  price.value ? `${new Intl.NumberFormat("uz-UZ").format(price.value)} so'm` : "Narx kelishiladi"
+);
+const students = computed(() => data.value?.students ?? 0);
+const image = computed(
+  () =>
+    data.value?.image ||
+    "https://i.pinimg.com/1200x/8c/f9/51/8cf951adfb8156444b1830ede482ad8e.jpg"
+);
+
+const daysText = computed(() => {
+  const d = data.value?.days;
+  if (Array.isArray(d) && d.length) return d.join(", ");
+  if (d) return String(d);
+  return "Seshanba, Payshanba, Shanba";
+});
+
+const dayList = computed(() =>
+  daysText.value.split(",").map((s) => s.trim()).filter(Boolean)
+);
+
+const timeText = computed(() => data.value?.time || "16:30 - 18:00");
+const location = computed(() => data.value?.location || "");
+
+const loadData = async () => {
+  loading.value = true;
+  error.value = "";
+  try {
+    const id = route.query.course || route.query.group;
+    if (!id) {
+      error.value = "Ma'lumot topilmadi.";
+      return;
+    }
+    const endpoint = isCourse.value
+      ? `${API_URL}/api/courses/${id}/`
+      : `${API_URL}/api/groups/${id}/`;
+    const response = await fetch(endpoint);
+    if (!response.ok) throw new Error();
+    data.value = await response.json();
+  } catch (e) {
+    console.error(e);
+    error.value = "Ma'lumotni yuklab bo'lmadi.";
+  } finally {
+    loading.value = false;
+  }
 };
 
+const bookGroup = () => {
+  alert("Joy band qilindi! Tez orada operatorlar siz bilan bog'lanadi.");
+};
+
+onMounted(loadData);
 </script>

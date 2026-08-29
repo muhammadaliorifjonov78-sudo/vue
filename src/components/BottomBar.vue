@@ -1,6 +1,6 @@
 <template>
   <div
-    class="fixed bottom-0 left-1/2 -translate-x-1/2 w-[390px] h-[75px] bg-white rounded-t-3xl shadow flex justify-around items-center z-50"
+    class="fixed bottom-0 left-1/2 -translate-x-1/2 w-full max-w-[390px] h-[75px] bg-white rounded-t-3xl shadow flex justify-around items-center z-50"
   >
     <RouterLink
       to="/home"

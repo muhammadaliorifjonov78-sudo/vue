@@ -5,7 +5,7 @@
 
       <div class="mt-16">
         <label class="text-xs text-gray-500">Telegram telefon raqami</label>
-        <input v-model="phoneNumber" type="tel" placeholder="+998901234567" class="mt-2 w-full rounded-lg border border-gray-300 px-4 py-3 focus:border-blue-500 focus:outline-none" />
+        <input v-model="phoneNumber" type="tel" placeholder="901234567" class="mt-2 w-full rounded-lg border border-gray-300 px-4 py-3 focus:border-blue-500 focus:outline-none" />
       </div>
 
       <div class="mt-10">

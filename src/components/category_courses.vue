@@ -1,5 +1,5 @@
 <template>
-  <div class="w-[390px] min-h-screen mx-auto bg-[#EDF0F6] pb-[90px]">
+  <div class="w-full max-w-[390px] min-h-screen mx-auto bg-[#EDF0F6] pb-[90px]">
     <nav class="flex items-center justify-between px-5 pt-5">
       <button @click="$router.back()" class="w-8 h-8 flex items-center justify-center">
         <i class="fa-solid fa-arrow-left text-gray-700"></i>
@@ -31,7 +31,12 @@
     </div>
 
     <div v-else class="px-5 mt-3 space-y-4">
-      <div v-for="course in courses" :key="course.id" class="bg-white rounded-2xl p-3 shadow-sm">
+      <router-link
+        v-for="course in courses"
+        :key="course.id"
+        :to="{ path: '/joybandqilish', query: { course: course.id } }"
+        class="bg-white rounded-2xl p-3 shadow-sm block"
+      >
         <img :src="course.image" class="w-full h-[155px] object-cover rounded-xl" alt="" />
         <div class="flex justify-between gap-3 mt-3">
           <div>
@@ -47,27 +52,12 @@
           </div>
         </div>
         <p class="font-bold text-[13px] mt-3">{{ formatPrice(course.price) }} so'm</p>
-      </div>
+      </router-link>
 
       <div v-if="!loading && courses.length === 0" class="bg-white rounded-2xl p-8 text-center">
         <i class="fa-solid fa-magnifying-glass text-3xl text-gray-300"></i>
         <p class="font-semibold mt-3">Kurs topilmadi</p>
       </div>
-    </div>
-
-    <div class="fixed bottom-0 left-1/2 -translate-x-1/2 w-[390px] h-[60px] bg-white border-t border-gray-200 flex items-center justify-around z-50">
-      <router-link to="/home" class="flex flex-col items-center gap-1 text-gray-400">
-        <i class="fa-solid fa-house"></i><span class="text-[8px]">Bosh sahifa</span>
-      </router-link>
-      <router-link to="/search" class="flex flex-col items-center gap-1 text-gray-400">
-        <i class="fa-solid fa-magnifying-glass"></i><span class="text-[8px]">Qidirish</span>
-      </router-link>
-      <router-link to="/sevimlilar" class="flex flex-col items-center gap-1 text-gray-400">
-        <i class="fa-regular fa-heart"></i><span class="text-[8px]">Sevimlilar</span>
-      </router-link>
-      <router-link to="/profil" class="flex flex-col items-center gap-1 text-gray-400">
-        <i class="fa-regular fa-user"></i><span class="text-[8px]">Profil</span>
-      </router-link>
     </div>
   </div>
 </template>
